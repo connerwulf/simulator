@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
 
 	int quantum = atoi(argv[1]);
 	int contSwitch = atoi(argv[2]);
-	char fileName[] = argv[3];
+	char fileName[strlen(argv[3]) + 1] = argv[3];
 	
 	printf("%d\n", quantum);
 	printf("%d\n", contSwitch);
