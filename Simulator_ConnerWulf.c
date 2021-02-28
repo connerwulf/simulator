@@ -5,8 +5,13 @@
 ****************************************************************/
 int main(int argc, char *argv[])
 {
-	for(int i = 0; i < argc; i++)
-	{
-		printf("%s\n", argv[i]);
-	}
+
+	int quantum = atoi(argv[1]);
+	int contSwitch = atoi(argv[2]);
+	char fileName[] = argv[3];
+	
+	printf("%d\n", quantum);
+	printf("%d\n", contSwitch);
+	printf("%s\n", fileName);
+	
 }
