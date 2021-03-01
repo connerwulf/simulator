@@ -2,8 +2,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-
+#include <limits.h>
+/*
+Author: Conner Wulf
+References:
+Basic Queue functionailty: https://www.geeksforgeeks.org/queue-set-1introduction-and-array-implementation/
+*/
 
 struct Process
 {
@@ -13,8 +17,30 @@ struct Process
 	int burstTime;
 };
 
+struct Queue
+{
+	int front;
+	int rear;
+	int size;
+	unsigned maxSize;
+	struct Process* array;
+};
+
 void sortByArrival(struct Process processes[], int first, int last);
 
+struct Queue* createQueue(unsigned maxSize);
+
+int isFull(struct Queue* queue);
+
+int isEmpty(struct Queue* queue);
+
+void push(struct Queue* queue, struct Process process);
+
+struct Process pop(struct Queue* queue);
+
+struct Process front(struct Queue* queue);
+
+struct Process rear(struct Queue* queue);
 
 
 /****************************************************************
@@ -62,13 +88,26 @@ int main(int argc, char *argv[])
 	sortByArrival(processes, 0, numProcesses - 1);
 	
 	int time = 0;
-
-	while(true)
+	int processesFinished = 0;
+	int process_index = 0;
+	struct Queue* readyQueue = createQueue((unsigned)numProcesses);
+	while(time < 100)
 	{
 		//check if we should add process to queue
-		//check queue for a process to run
-		//run process for time quantum
+		if(time == processes[process_index].arrivalTime)
+		{
+			push(readyQueue, processes[process_index]);
+			printf("Time %d P%d arrives\n", time, processes[process_index].process_id);
+			process_index++;
+		}
+		if(!isEmpty(readyQueue))
+		{
+			//run process for time quantum
+		}
+		
+		
 		//add process to ready queue if burst > 0
+		time++;
 
 	}
 	
@@ -112,3 +151,79 @@ void sortByArrival(struct Process processes[], int first, int last)
 		sortByArrival(processes, j+1, last);
 	}
 }
+
+
+struct Queue* createQueue(unsigned maxSize)
+{
+	struct Queue* queue = (struct Queue*)malloc(sizeof(struct Queue));
+	queue->maxSize = maxSize;
+	queue->front = 0;
+	queue->size = 0;
+	queue->rear = maxSize - 1;
+	queue->array = (struct Process*)malloc(queue->maxSize * sizeof(struct Process));
+
+	return queue;
+}
+
+int isFull(struct Queue* queue)
+{
+	return(queue->size == queue->maxSize);
+}
+
+int isEmpty(struct Queue* queue)
+{
+	return (queue->size == 0);
+}
+
+void push(struct Queue* queue, struct Process process)
+{
+	if(isFull(queue))
+	{
+		return;
+	}
+	queue->rear = (queue->rear + 1) & queue->maxSize;
+	queue->array[queue->rear] = process;
+	queue->size = queue->size + 1;
+}
+
+struct Process pop(struct Queue* queue)
+{
+	if(isEmpty(queue))
+	{
+		struct Process result;
+		result.process_id = -1;
+		return result;
+	}
+
+	struct Process item = queue->array[queue->front];
+	queue->front = (queue->front + 1) % queue->maxSize;
+	queue->size = queue->size - 1;
+	return item;
+}
+
+struct Process front(struct Queue* queue)
+{
+	if(isEmpty(queue))
+	{
+		struct Process result;
+		result.process_id = -1;
+		return result;
+	}
+	return queue->array[queue->front];
+}
+
+struct Process rear(struct Queue* queue)
+{
+	if(isEmpty(queue))
+	{
+		struct Process result;
+		result.process_id = -1;
+		return result;
+	}
+	return queue->array[queue->rear];
+}
+
+
+
+
+
