@@ -27,7 +27,7 @@ void sortByArrival(Process processes[], int first, int last);
 void print_queue(Node *head);
 Process* dequeue(Node **head);
 void enqueue(Node **head, Process *process);
-void CPU_Burst(Process *process, int *runningQuantum, int quantum);
+void CPU_Burst(Process *process, int runningQuantum, int quantum);
 
 
 /****************************************************************
@@ -73,7 +73,7 @@ int main(int argc, char *argv[])
 	int time = 0;
 	int processesFinished = 0;
 	int process_index = 0;
-	int* runningQuantum = 0;
+	int runningQuantum = 0;
 	Node *head = NULL;
 	Process *temp = NULL;
 	while(time < 100)
@@ -96,13 +96,13 @@ int main(int argc, char *argv[])
 
 			if(runningQuantum < quantum)
 			{
-			CPU_Burst(temp, *runningQuantum, quantum);
+			CPU_Burst(temp, runningQuantum, quantum);
 			}
 			if(temp->burstTime == 0)
 			{
 				printf("Time %d P%d finished\n", time, temp->process_id);
 			}
-			else if((&runningQuantum + 1) == quantum)
+			else if((runningQuantum + 1) == quantum)
 			{
 					enqueue(&head, temp);
 					temp = NULL;
