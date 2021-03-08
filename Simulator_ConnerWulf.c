@@ -19,7 +19,7 @@ typedef struct Process
 
 typedef struct Node
 {
-	Node *ptr;
+	struct Node *ptr;
 	Process *process;
 } Node;
 
