@@ -27,7 +27,7 @@ void sortByArrival(Process processes[], int first, int last);
 void print_queue(Node *head);
 Process* dequeue(Node **head);
 void enqueue(Node **head, Process *process);
-void CPU_Burst(Process *process, int runningQuantum, int quantum);
+void CPU_Burst(Process *process, int *runningQuantum, int quantum);
 
 
 /****************************************************************
@@ -96,7 +96,7 @@ int main(int argc, char *argv[])
 
 			if(runningQuantum < quantum)
 			{
-			CPU_Burst(temp, runningQuantum, quantum);
+			CPU_Burst(temp, &runningQuantum, quantum);
 			printf("%d %d %d %d\n", temp->process_id, temp->burstTime, quantum, runningQuantum);
 			}
 			if(temp->burstTime == 0)
@@ -140,12 +140,12 @@ int main(int argc, char *argv[])
 /****************************************************************
 *                  Supporting Functions                                    *
 ****************************************************************/
-void CPU_Burst(Process *process, int runningQuantum, int quantum)
+void CPU_Burst(Process *process, int *runningQuantum, int quantum)
 {
 
-	if(runningQuantum < quantum)
+	if(*runningQuantum < quantum)
 	{
-		runningQuantum++;
+		*runningQuantum++;
 		process->burstTime--;
 	}
 }
