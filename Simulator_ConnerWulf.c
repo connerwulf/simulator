@@ -86,7 +86,7 @@ int main(int argc, char *argv[])
 			process_index++;
 		}
 
-		if(head != NULL)
+		if(head != NULL || temp != NULL)
 		{
 			if(runningQuantum == 0)
 			{
@@ -105,6 +105,7 @@ int main(int argc, char *argv[])
 				processesFinished++;
 				printf("Time %d P%d finished\n", time, temp->process_id);
 				runningQuantum = 0;
+				temp = NULL;
 			}
 			else if(runningQuantum == quantum)
 			{
