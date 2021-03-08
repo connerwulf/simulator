@@ -106,7 +106,7 @@ int main(int argc, char *argv[])
 				printf("Time %d P%d finished\n", time, temp->process_id);
 				runningQuantum = 0;
 			}
-			else if((runningQuantum) == quantum)
+			else if((runningQuantum+ 1) == quantum)
 			{
 					enqueue(&head, temp);
 					temp = NULL;
