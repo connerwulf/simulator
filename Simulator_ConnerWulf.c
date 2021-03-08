@@ -98,7 +98,7 @@ int main(int argc, char *argv[])
 			 }
 			 else if(temp->burstTime <= quantum)
 			{
-				temp=>burstTime = 0;
+				temp->burstTime = 0;
 				time = time + temp->burstTime;
 				printf("Time %d P%d finished\n", time, temp->process_id);
 				processesFinished++;
