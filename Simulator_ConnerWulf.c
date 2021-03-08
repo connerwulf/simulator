@@ -73,7 +73,7 @@ int main(int argc, char *argv[])
 	int time = 0;
 	int processesFinished = 0;
 	int process_index = 0;
-	int runningQuantum = 0;
+	int* runningQuantum = 0;
 	Node *head = NULL;
 	Process *temp = NULL;
 	while(time < 100)
