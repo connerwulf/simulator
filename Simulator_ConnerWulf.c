@@ -94,7 +94,7 @@ int main(int argc, char *argv[])
 			 {
 			 	temp->burstTime = temp->burstTime - quantum;
 			 	time = time + quantum;
-			 	enqueue(&head, &temp);
+			 	enqueue(&head, temp);
 			 }
 			 else if(temp->burstTime <= quantum)
 			{
