@@ -104,6 +104,7 @@ int main(int argc, char *argv[])
 			{
 				processesFinished++;
 				printf("Time %d P%d finished\n", time, temp->process_id);
+				runningQuantum = 0;
 			}
 			else if((runningQuantum + 1) == quantum)
 			{
@@ -111,23 +112,6 @@ int main(int argc, char *argv[])
 					temp = NULL;
 					runningQuantum = 0;
 			}
-
-
-
-
-			//  if(temp->burstTime > quantum)
-			//  {
-			//  	temp->burstTime = temp->burstTime - quantum;
-			//  	time = time + quantum;
-			//  	enqueue(&head, temp);
-			//  }
-			//  else if(temp->burstTime <= quantum)
-			// {
-			// 	temp->burstTime = 0;
-			// 	time = time + temp->burstTime;
-			// 	printf("Time %d P%d finished\n", time, temp->process_id);
-			// 	processesFinished++;
-			// }
 		}
 
 
