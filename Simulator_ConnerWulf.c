@@ -76,7 +76,7 @@ int main(int argc, char *argv[])
 	int runningQuantum = 0;
 	Node *head = NULL;
 	Process *temp = NULL;
-	while(processesFinished < numProcesses)
+	while(processesFinished < numProcesses - 1)
 	{
 		//check if we should add process to queue
 		if(time == processes[process_index].arrivalTime)
