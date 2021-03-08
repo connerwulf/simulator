@@ -76,7 +76,7 @@ int main(int argc, char *argv[])
 	int runningQuantum = 0;
 	Node *head = NULL;
 	Process *temp = NULL;
-	while(time < 100)
+	while(processesFinished < numProcesses)
 	{
 		//check if we should add process to queue
 		if(time == processes[process_index].arrivalTime)
@@ -92,15 +92,17 @@ int main(int argc, char *argv[])
 			{
 				temp = dequeue(&head);
 			}
-			printf("%d %d %d %d\n", temp->process_id, temp->burstTime, quantum, runningQuantum);
+			//printf("%d %d %d %d\n", temp->process_id, temp->burstTime, quantum, runningQuantum);
 
 			if(runningQuantum < quantum)
 			{
 			CPU_Burst(temp, &runningQuantum, quantum);
-			printf("%d %d %d %d\n", temp->process_id, temp->burstTime, quantum, runningQuantum);
+				printf("Time %d P%d Runs\n", time, processes[process_index].process_id);
+			//printf("%d %d %d %d\n", temp->process_id, temp->burstTime, quantum, runningQuantum);
 			}
 			if(temp->burstTime == 0)
 			{
+				processesFinished++;
 				printf("Time %d P%d finished\n", time, temp->process_id);
 			}
 			else if((runningQuantum + 1) == quantum)
