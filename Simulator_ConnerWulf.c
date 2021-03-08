@@ -27,7 +27,7 @@ void sortByArrival(Process processes[], int first, int last);
 void print_queue(Node *head);
 Process* dequeue(Node **head);
 void enqueue(Node **head, Process *process);
-
+void CPU_Burst(Process *process);
 
 
 /****************************************************************
@@ -73,8 +73,9 @@ int main(int argc, char *argv[])
 	int time = 0;
 	int processesFinished = 0;
 	int process_index = 0;
+	int runningQuantum = 0;
 	Node *head = NULL;
-
+	Process *temp = NULL;
 	while(time < 100)
 	{
 		//check if we should add process to queue
@@ -88,7 +89,7 @@ int main(int argc, char *argv[])
 		if(head != NULL)
 		{
 
-			Process *temp = dequeue(&head);
+			temp = dequeue(&head);
 			printf("%d %d %d\n", temp->process_id, temp->burstTime, quantum);
 			 if(temp->burstTime > quantum)
 			 {
@@ -114,6 +115,9 @@ int main(int argc, char *argv[])
 
 }
 
+/****************************************************************
+*                  Supporting Functions                                    *
+****************************************************************/
 
 void sortByArrival(Process processes[], int first, int last)
 {
