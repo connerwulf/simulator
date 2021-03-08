@@ -143,7 +143,7 @@ int main(int argc, char *argv[])
 void CPU_Burst(Process *process, int *runningQuantum, int quantum)
 {
 
-	if(*runningQuantum < quantum)
+	if(runningQuantum < quantum)
 	{
 		*runningQuantum++;
 		process->burstTime--;
