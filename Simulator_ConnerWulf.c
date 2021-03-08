@@ -90,23 +90,23 @@ int main(int argc, char *argv[])
 
 			Process *temp = dequeue(&head);
 			printf("%d\n", temp->process_id);
-			// if(temp.burstTime > quantum)
-			// {
-			// 	temp.burstTime = temp.burstTime - quantum;
-			// 	time = time + quantum;
-			// 	enqueue(&head, &temp);
-			// }
-			// else if(temp.burstTime <= quantum)
-			// {
-			// 	temp.burstTime = 0;
-			// 	time = time + temp.burstTime;
-			// 	//printf("Time %d P%d finished\n", time, temp.process_id);
-			// 	processesFinished++;
-			// }
+			 if(temp->burstTime > quantum)
+			 {
+			 	temp->burstTime = temp->burstTime - quantum;
+			 	time = time + quantum;
+			 	enqueue(&head, &temp);
+			 }
+			 else if(temp->burstTime <= quantum)
+			{
+				temp=>burstTime = 0;
+				time = time + temp->burstTime;
+				printf("Time %d P%d finished\n", time, temp->process_id);
+				processesFinished++;
+			}
 		}
 
 
-		time++;
+		//time++;
 
 	}
 	//print_queue(head);
