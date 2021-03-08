@@ -85,11 +85,11 @@ int main(int argc, char *argv[])
 			process_index++;
 		}
 
-		if(!isEmpty(readyQueue))
+		if(*head != NULL)
 		{
 
-			Process temp = dequeue(&head);
-			printf("%d\n", temp.process_id);
+			Process *temp = dequeue(&head);
+			printf("%d\n", temp->process_id);
 			// if(temp.burstTime > quantum)
 			// {
 			// 	temp.burstTime = temp.burstTime - quantum;
