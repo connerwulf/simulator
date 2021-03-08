@@ -8,83 +8,26 @@ Author: Conner Wulf
 References: https://codereview.stackexchange.com/questions/141238/implementing-a-generic-queue-in-c
 */
 
-struct Process
+typedef struct Process
 {
 	int process_id;
 	int eventtype;
 	int arrivalTime;
 	int burstTime;
 	int timeFinished;
-} ;
+} Process;
 
-typedef struct Node 
+typedef struct Node
 {
-	struct Node *ptr;
-	struct Process *process;
+	Node *ptr;
+	Process *process;
 } Node;
 
 
-
-void enqueue(Node **head, struct Process *process)
-{
-	Node *new = malloc(sizeof(Node));
-
-	if(!new)
-	{
-		//create empty process withj id = -1
-		return;
-	}
-	new->process = process;
-	new->ptr = *head;
-	*head = new;
-}
-
-struct Process* dequeue(Node **head)
-{
-	Node *cur  = NULL;
-	Node *prev = NULL;
-	struct Process *temp = malloc(sizeof(struct Process));
-	if(*head == NULL)
-	{
-		temp->process_id = -1;
-		return temp;
-	}
-
-	cur = *head;
-	while(cur->ptr != NULL)
-	{
-		prev = cur;
-		cur = cur->ptr;
-	}
-	temp = cur->process;
-	free(cur);
-
-	if(prev)
-	{
-		prev->ptr = NULL;
-	}
-	else
-	{
-		*head = NULL;
-	}
-	return temp;
-}
-
-void print_queue(Node *head) 
-{
-	Node *temp = head;
-	while (temp != NULL) 
-	{
-		struct Process *processTemp = malloc(sizeof(struct Process));
-		processTemp = temp->process; 
-		printf("%d\n", processTemp->process_id);
-		temp = temp->ptr;
-	}
-}
-
-
-
-void sortByArrival(struct Process processes[], int first, int last);
+void sortByArrival(Process processes[], int first, int last);
+void print_queue(Node *head);
+void enqueue(Node **head, Process *process);
+Process* dequeue(Node **head);
 
 
 
@@ -104,15 +47,15 @@ int main(int argc, char *argv[])
 	if(file == NULL)
 	{
 		printf("Error reading in file\n");
-		
+
 	}
 	while(fgets(fileLine, sizeof(fileLine), file))
 	{
 		numProcesses++;
 	}
 
-	struct Process processes[numProcesses];
-	
+	Process processes[numProcesses];
+
 	rewind(file);
 
 	int line = 0;
@@ -123,11 +66,11 @@ int main(int argc, char *argv[])
 						   , &processes[line].arrivalTime
 					   		, &processes[line].burstTime);
 		totalTime += processes[line].burstTime;
-		
+
 	}
 
 	sortByArrival(processes, 0, numProcesses - 1);
-	
+
 	int time = 0;
 	int processesFinished = 0;
 	int process_index = 0;
@@ -143,11 +86,11 @@ int main(int argc, char *argv[])
 			printf("Time %d P%d arrives\n", time, processes[process_index].process_id);
 			process_index++;
 		}
-		
+
 		// if(!isEmpty(readyQueue))
 		// {
 
-		// 	//struct Process temp = pop(readyQueue);
+		// 	//Process temp = pop(readyQueue);
 		// 	printf("%d\n", temp.process_id);
 		// 	if(temp.burstTime > quantum)
 		// 	{
@@ -164,20 +107,20 @@ int main(int argc, char *argv[])
 		// 	}
 
 
-		//} 
+		//}
 		time++;
-		
+
 	}
 	print_queue(head);
 	exit(0);
-	
+
 }
 
 
-void sortByArrival(struct Process processes[], int first, int last)
+void sortByArrival(Process processes[], int first, int last)
 {
 	int i, j, piv;
-	struct Process temp;
+	Process temp;
 	if(first < last)
 	{
 		piv = first;
@@ -209,9 +152,60 @@ void sortByArrival(struct Process processes[], int first, int last)
 		sortByArrival(processes, j+1, last);
 	}
 }
+void print_queue(Node *head)
+{
+	Node *temp = head;
+	while (temp != NULL)
+	{
+		Process *processTemp = malloc(sizeof(Process));
+		processTemp = temp->process;
+		printf("%d\n", processTemp->process_id);
+		temp = temp->ptr;
+	}
+}
 
 
+Process* dequeue(Node **head)
+{
+	Node *cur  = NULL;
+	Node *prev = NULL;
+	Process *temp = malloc(sizeof(Process));
+	if(*head == NULL)
+	{
+		temp->process_id = -1;
+		return temp;
+	}
 
+	cur = *head;
+	while(cur->ptr != NULL)
+	{
+		prev = cur;
+		cur = cur->ptr;
+	}
+	temp = cur->process;
+	free(cur);
 
+	if(prev)
+	{
+		prev->ptr = NULL;
+	}
+	else
+	{
+		*head = NULL;
+	}
+	return temp;
+}
 
+void enqueue(Node **head, Process *process)
+{
+	Node *new = malloc(sizeof(Node));
 
+	if(!new)
+	{
+		//create empty process withj id = -1
+		return;
+	}
+	new->process = process;
+	new->ptr = *head;
+	*head = new;
+}
