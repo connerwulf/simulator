@@ -23,11 +23,10 @@ typedef struct Node
 	Process *process;
 } Node;
 
-
 void sortByArrival(Process processes[], int first, int last);
 void print_queue(Node *head);
-void enqueue(Node **head, Process *process);
 Process* dequeue(Node **head);
+void enqueue(Node **head, Process *process);
 
 
 
@@ -78,7 +77,6 @@ int main(int argc, char *argv[])
 
 	while(time < 100)
 	{
-		//printf("%d\n", processesFinished);
 		//check if we should add process to queue
 		if(time == processes[process_index].arrivalTime)
 		{
@@ -87,31 +85,31 @@ int main(int argc, char *argv[])
 			process_index++;
 		}
 
-		// if(!isEmpty(readyQueue))
-		// {
+		if(!isEmpty(readyQueue))
+		{
 
-		// 	//Process temp = pop(readyQueue);
-		// 	printf("%d\n", temp.process_id);
-		// 	if(temp.burstTime > quantum)
-		// 	{
-		// 		temp.burstTime = temp.burstTime - quantum;
-		// 		time = time + quantum;
-		// 		//push(readyQueue, &temp);
-		// 	}
-		// 	else if(temp.burstTime <= quantum)
-		// 	{
-		// 		temp.burstTime = 0;
-		// 		time = time + temp.burstTime;
-		// 		//printf("Time %d P%d finished\n", time, temp.process_id);
-		// 		processesFinished++;
-		// 	}
+			Process temp = dequeue(&head);
+			printf("%d\n", temp.process_id);
+			// if(temp.burstTime > quantum)
+			// {
+			// 	temp.burstTime = temp.burstTime - quantum;
+			// 	time = time + quantum;
+			// 	enqueue(&head, &temp);
+			// }
+			// else if(temp.burstTime <= quantum)
+			// {
+			// 	temp.burstTime = 0;
+			// 	time = time + temp.burstTime;
+			// 	//printf("Time %d P%d finished\n", time, temp.process_id);
+			// 	processesFinished++;
+			// }
+		}
 
 
-		//}
 		time++;
 
 	}
-	print_queue(head);
+	//print_queue(head);
 	exit(0);
 
 }
