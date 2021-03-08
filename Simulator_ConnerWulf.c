@@ -97,7 +97,7 @@ int main(int argc, char *argv[])
 			if(runningQuantum < quantum)
 			{
 			CPU_Burst(temp, &runningQuantum, quantum);
-			printf("Time %d P%d Runs: Burst Left: %d\n", time, temp->process_id, temp->burstTime);
+			printf("Time %d P%d Runs\n", time, temp->process_id);
 			//printf("%d %d %d %d\n", temp->process_id, temp->burstTime, quantum, runningQuantum);
 			}
 			if(temp->burstTime == 0)
