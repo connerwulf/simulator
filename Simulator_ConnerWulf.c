@@ -85,7 +85,7 @@ int main(int argc, char *argv[])
 			process_index++;
 		}
 
-		if(*head != NULL)
+		if(head != NULL)
 		{
 
 			Process *temp = dequeue(&head);
