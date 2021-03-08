@@ -27,7 +27,7 @@ void sortByArrival(Process processes[], int first, int last);
 void print_queue(Node *head);
 Process* dequeue(Node **head);
 void enqueue(Node **head, Process *process);
-void CPU_Burst(Process *process);
+void CPU_Burst(Process *process, int *runningQuantum, int quantum);
 
 
 /****************************************************************
@@ -88,22 +88,42 @@ int main(int argc, char *argv[])
 
 		if(head != NULL)
 		{
-
-			temp = dequeue(&head);
-			printf("%d %d %d\n", temp->process_id, temp->burstTime, quantum);
-			 if(temp->burstTime > quantum)
-			 {
-			 	temp->burstTime = temp->burstTime - quantum;
-			 	time = time + quantum;
-			 	enqueue(&head, temp);
-			 }
-			 else if(temp->burstTime <= quantum)
+			if(runningQuantum == 0)
 			{
-				temp->burstTime = 0;
-				time = time + temp->burstTime;
-				printf("Time %d P%d finished\n", time, temp->process_id);
-				processesFinished++;
+				temp = dequeue(&head);
 			}
+			printf("%d %d %d %d\n", temp->process_id, temp->burstTime, quantum, runningQuantum);
+
+
+			CPU_Burst(temp, *runningQuantum, quantum);
+
+			if(temp->burstTime == 0)
+			{
+				printf("Time %d P%d finished\n", time, temp->process_id);
+			}
+			else if((runningQuantum + 1) == quantum)
+			{
+					enqueue(&head, temp);
+					temp = NULL;
+					runningQuantum = 0;
+			}
+
+
+
+
+			//  if(temp->burstTime > quantum)
+			//  {
+			//  	temp->burstTime = temp->burstTime - quantum;
+			//  	time = time + quantum;
+			//  	enqueue(&head, temp);
+			//  }
+			//  else if(temp->burstTime <= quantum)
+			// {
+			// 	temp->burstTime = 0;
+			// 	time = time + temp->burstTime;
+			// 	printf("Time %d P%d finished\n", time, temp->process_id);
+			// 	processesFinished++;
+			// }
 		}
 
 
@@ -118,6 +138,16 @@ int main(int argc, char *argv[])
 /****************************************************************
 *                  Supporting Functions                                    *
 ****************************************************************/
+void CPU_Burst(Process *process, int *runningQuantum, int quantum)
+{
+
+	if(&runningQuantum < quantum)
+	{
+		&runningQuantum++;
+		process->burstTime--;
+	}
+}
+
 
 void sortByArrival(Process processes[], int first, int last)
 {
