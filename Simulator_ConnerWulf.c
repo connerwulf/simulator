@@ -89,7 +89,7 @@ int main(int argc, char *argv[])
 		{
 
 			Process *temp = dequeue(&head);
-			printf("%d\n", temp->process_id);
+			printf("%d %d %d\n", temp->process_id, temp->burstTime, quantum);
 			 if(temp->burstTime > quantum)
 			 {
 			 	temp->burstTime = temp->burstTime - quantum;
