@@ -79,7 +79,7 @@ int main(int argc, char *argv[])
 	while(processesFinished < numProcesses - 1)
 	{
 		//check if we should add process to queue
-		if(time == processes[process_index].arrivalTime)
+		if(time == processes[process_index].arrivalTime && process_index < numProcesses)
 		{
 			enqueue(&head, &processes[process_index]);
 			printf("Time %d P%d arrives\n", time, processes[process_index].process_id);
