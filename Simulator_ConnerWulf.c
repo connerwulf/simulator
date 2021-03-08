@@ -106,7 +106,7 @@ int main(int argc, char *argv[])
 		}
 
 
-		//time++;
+		time++;
 
 	}
 	//print_queue(head);
