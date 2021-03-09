@@ -97,12 +97,14 @@ int main(int argc, char *argv[])
 			if(runningQuantum < quantum)
 			{
 			CPU_Burst(temp, &runningQuantum, quantum);
+			time++;
 			printf("Time %d P%d Runs\n", time, temp->process_id);
 			//printf("%d %d %d %d\n", temp->process_id, temp->burstTime, quantum, runningQuantum);
 			}
 			if(temp->burstTime == 0)
 			{
 				processesFinished++;
+
 				printf("Time %d P%d finished\n", time, temp->process_id);
 				runningQuantum = 0;
 				temp = NULL;
@@ -110,13 +112,15 @@ int main(int argc, char *argv[])
 			else if(runningQuantum == quantum)
 			{
 					enqueue(&head, temp);
+
 					temp = NULL;
 					runningQuantum = 0;
 			}
+
 		}
 
 
-		time++;
+
 
 	}
 	//print_queue(head);
