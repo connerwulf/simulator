@@ -101,7 +101,7 @@ int main(int argc, char *argv[])
 				if(runningQuantum == 0 || printNew == 1)
 				{
 					printf("Time %d P%d Runs\n", time, temp->process_id);
-					printNew == 0;
+					printNew = 0;
 				}
 			CPU_Burst(temp, &runningQuantum, quantum);
 			time++;
