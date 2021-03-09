@@ -169,6 +169,8 @@ int main(int argc, char *argv[])
 
 
 	}
+	totalTime = time;
+
 	for(int g = 0; g < numProcesses; g++)
 	{
 		printf("Process %d %d %d %d\n",processes[g].process_id
@@ -176,7 +178,7 @@ int main(int argc, char *argv[])
 						   , processes[g].timeFinished
 						 	 , totalTime);
 	}
-	totalTime = time;
+
 	exit(0);
 
 }
