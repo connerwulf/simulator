@@ -92,16 +92,7 @@ int main(int argc, char *argv[])
 	//Loop until all processes are finished
 	while(processesFinished < numProcesses)
 	{
-		//check if we should add process to queue
-		if(time == processes[process_index].arrivalTime && process_index < numProcesses)
-		{
-			//context switch
-			enqueue(&head, &processes[process_index]);
-			printf("Time %d P%d arrives\n", time, processes[process_index].process_id);
-			time = time + contSwitch;
-			printNew = 1;
-			process_index++;
-		}
+
 		//If a process exists in the readyQueue or If one is already loaded
 		if(head != NULL || temp != NULL)
 		{
@@ -119,7 +110,7 @@ int main(int argc, char *argv[])
 				if(runningQuantum == 0 || printNew == 1)
 				{
 					//Could combine with above if, contextswitch and dequeue here
-					printf("Time %d P%d Runs\n", time, temp->process_id);
+					printf("P%d Runs at Time %d \n", temp->process_id, time);
 					printNew = 0;
 				}
 				//One CPU_Burst cycle and increment time
@@ -131,7 +122,7 @@ int main(int argc, char *argv[])
 			if(temp->burstTime == 0)
 			{
 				processesFinished++;
-				printf("Time %d P%d finished\n", time, temp->process_id);
+				printf("P%d finished at Time %d \n", temp->process_id, time);
 				runningQuantum = 0;
 				temp = NULL;
 				time = time + contSwitch;
@@ -150,6 +141,18 @@ int main(int argc, char *argv[])
 		{
 			time++;
 		}
+
+		//check if we should add process to queue
+		if(time == processes[process_index].arrivalTime && process_index < numProcesses)
+		{
+			//context switch
+			enqueue(&head, &processes[process_index]);
+			printf("P%d arrives at Time %d \n", processes[process_index].process_id, time);
+			time = time + contSwitch;
+			printNew = 1;
+			process_index++;
+		}
+
 	}
 	//print_queue(head);
 	exit(0);
