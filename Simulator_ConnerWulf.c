@@ -102,7 +102,6 @@ int main(int argc, char *argv[])
 			if(runningQuantum == 0 )
 			{
 				//ContextSwitch
-				time = time + contSwitch;
 				temp = dequeue(&head);
 			}
 			//printf("%d %d %d %d\n", temp->process_id, temp->burstTime, quantum, runningQuantum);
@@ -140,12 +139,16 @@ int main(int argc, char *argv[])
 				temp->timeFinished = time;
 				runningQuantum = 0;
 				temp = NULL;
+				if(head != NULL)
+				{
+					time = time + contSwitch;
+				}
 			}
 			//Checks if timeslice expired after cpu burst
 			else if(runningQuantum == quantum)
 			{
 					enqueue(&head, temp);
-
+					time = time + contSwitch;
 					temp = NULL;
 					runningQuantum = 0;
 			}
