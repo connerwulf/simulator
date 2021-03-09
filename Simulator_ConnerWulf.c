@@ -86,13 +86,12 @@ int main(int argc, char *argv[])
 			process_index++;
 		}
 
-		if(head != NULL)
+		if(head != NULL || temp != NULL)
 		{
 			if(runningQuantum == 0)
 			{
 				temp = dequeue(&head);
 			}
-		}
 			//printf("%d %d %d %d\n", temp->process_id, temp->burstTime, quantum, runningQuantum);
 
 			if(runningQuantum < quantum)
@@ -118,7 +117,11 @@ int main(int argc, char *argv[])
 					runningQuantum = 0;
 			}
 
-
+		}
+		else
+		{
+			time++;
+		}
 
 
 
