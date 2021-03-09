@@ -96,7 +96,10 @@ int main(int argc, char *argv[])
 
 			if(runningQuantum < quantum)
 			{
-			printf("Time %d P%d Runs\n", time, temp->process_id);
+				if(runningQuantum == 0)
+				{
+					printf("Time %d P%d Runs\n", time, temp->process_id);
+				}
 			CPU_Burst(temp, &runningQuantum, quantum);
 			time++;
 			//printf("%d %d %d %d\n", temp->process_id, temp->burstTime, quantum, runningQuantum);
