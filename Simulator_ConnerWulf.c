@@ -136,6 +136,7 @@ int main(int argc, char *argv[])
 			{
 				processesFinished++;
 				printf("P%d finished at Time %d \n", temp->process_id, time);
+				temp->timeFinished = time;
 				runningQuantum = 0;
 				temp = NULL;
 				time = time + contSwitch;
@@ -170,10 +171,9 @@ int main(int argc, char *argv[])
 	}
 	for(int g = 0; g < numProcesses; g++)
 	{
-		printf("Process %d %d %d %d\n",processes[g].process_id
-						   , processes[g].eventtype
-						   , processes[g].arrivalTime
-					   		, processes[g].burstTimeCalc);
+		printf("Process %d %d %d \n",processes[g].process_id
+						   , processes[g].burstTimeCalc
+						   , processes[g].timeFinished);
 	}
 	//print_queue(head);
 	exit(0);
