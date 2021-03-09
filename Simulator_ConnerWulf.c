@@ -5,9 +5,9 @@
 #include <limits.h>
 /*
 Author: Conner Wulf
-References: https://codereview.stackexchange.com/questions/141238/implementing-a-generic-queue-in-c
 */
 
+//Struct to hold all information required by process
 typedef struct Process
 {
 	int process_id;
@@ -17,12 +17,15 @@ typedef struct Process
 	int timeFinished;
 } Process;
 
+//Base node for custom Queue
 typedef struct Node
 {
 	struct Node *ptr;
 	Process *process;
 } Node;
 
+
+//Function definitions
 void sortByArrival(Process processes[], int first, int last);
 void print_queue(Node *head);
 Process* dequeue(Node **head);
@@ -35,28 +38,34 @@ void CPU_Burst(Process *process, int* runningQuantum, int quantum);
 ****************************************************************/
 int main(int argc, char *argv[])
 {
-
+	//Initialize variables and read in command line args
 	int quantum = atoi(argv[1]);
 	int contSwitch = atoi(argv[2]);
 	char * fileName = argv[3];
+
+	//Open file to read
 	FILE* file = fopen(fileName, "r");
 	char fileLine[16];
 	int numProcesses, totalTime = 0;
-
 	if(file == NULL)
 	{
 		printf("Error reading in file\n");
-
+		exit(0);
 	}
+
+	//Traverse file to calculate the number of Processes from input file
 	while(fgets(fileLine, sizeof(fileLine), file))
 	{
 		numProcesses++;
 	}
 
+	//Array of struct Process to hold all data from input file
 	Process processes[numProcesses];
 
+	//Rewind file to reread in order to extracted information
 	rewind(file);
 
+	//Read in processes from input file
 	int line = 0;
 	for(line = 0; line < numProcesses; line++)
 	{
@@ -67,9 +76,11 @@ int main(int argc, char *argv[])
 		totalTime += processes[line].burstTime;
 
 	}
-
+	//Quick Sort algorithm sort processes by the time they arrive.
 	sortByArrival(processes, 0, numProcesses - 1);
 
+
+/*** ROUND ROBIN ALOGRITHM STARTS***/
 	int time = 0;
 	int processesFinished = 0;
 	int process_index = 0;
@@ -77,47 +88,59 @@ int main(int argc, char *argv[])
 	int printNew = 0;
 	Node *head = NULL;
 	Process *temp = NULL;
+
+	//Loop until all processes are finished
 	while(processesFinished < numProcesses)
 	{
 		//check if we should add process to queue
 		if(time == processes[process_index].arrivalTime && process_index < numProcesses)
 		{
+			//context switch
 			enqueue(&head, &processes[process_index]);
 			printf("Time %d P%d arrives\n", time, processes[process_index].process_id);
+			time = time + contSwitch;
 			printNew = 1;
 			process_index++;
 		}
-
+		//If a process exists in the readyQueue or If one is already loaded
 		if(head != NULL || temp != NULL)
 		{
+			//Keep track of time slice
 			if(runningQuantum == 0 )
 			{
+				//ContextSwitch
 				temp = dequeue(&head);
 			}
 			//printf("%d %d %d %d\n", temp->process_id, temp->burstTime, quantum, runningQuantum);
-
+			//Checks if timeSlice expired before cpu burst
 			if(runningQuantum < quantum)
 			{
+				//Conditional to check if
 				if(runningQuantum == 0 || printNew == 1)
 				{
+					//Could combine with above if, contextswitch and dequeue here
 					printf("Time %d P%d Runs\n", time, temp->process_id);
 					printNew = 0;
 				}
+				//One CPU_Burst cycle and increment time
 			CPU_Burst(temp, &runningQuantum, quantum);
 			time++;
 			//printf("%d %d %d %d\n", temp->process_id, temp->burstTime, quantum, runningQuantum);
 			}
+			//Checks if process finished after cpu cycle
 			if(temp->burstTime == 0)
 			{
 				processesFinished++;
 				printf("Time %d P%d finished\n", time, temp->process_id);
 				runningQuantum = 0;
 				temp = NULL;
+				time = time + contSwitch;
 			}
+			//Checks if timeslice expired after cpu burst
 			else if(runningQuantum == quantum)
 			{
 					enqueue(&head, temp);
-
+					time = time + contSwitch;
 					temp = NULL;
 					runningQuantum = 0;
 			}
@@ -134,8 +157,9 @@ int main(int argc, char *argv[])
 }
 
 /****************************************************************
-*                  Supporting Functions                                    *
+*                  Supporting Functions definitions                                    *
 ****************************************************************/
+//Subtracts one from process burst time
 void CPU_Burst(Process *process, int* runningQuantum, int quantum)
 {
 
@@ -146,7 +170,7 @@ void CPU_Burst(Process *process, int* runningQuantum, int quantum)
 	}
 }
 
-
+//Quicksort for Process array based on arrival time
 void sortByArrival(Process processes[], int first, int last)
 {
 	int i, j, piv;
@@ -182,6 +206,8 @@ void sortByArrival(Process processes[], int first, int last)
 		sortByArrival(processes, j+1, last);
 	}
 }
+
+//Debug print for custom queue
 void print_queue(Node *head)
 {
 	Node *temp = head;
