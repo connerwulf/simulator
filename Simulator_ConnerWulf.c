@@ -113,6 +113,15 @@ int main(int argc, char *argv[])
 					printf("P%d Runs at Time %d \n", temp->process_id, time);
 					printNew = 0;
 				}
+				if(time == processes[process_index].arrivalTime && process_index < numProcesses)
+				{
+					//context switch
+					enqueue(&head, &processes[process_index]);
+					printf("P%d arrives at Time %d \n", processes[process_index].process_id, time);
+					time = time + contSwitch;
+					printNew = 1;
+					process_index++;
+				}
 				//One CPU_Burst cycle and increment time
 			CPU_Burst(temp, &runningQuantum, quantum);
 			time++;
@@ -140,18 +149,19 @@ int main(int argc, char *argv[])
 		else
 		{
 			time++;
+			if(time == processes[process_index].arrivalTime && process_index < numProcesses)
+			{
+				//context switch
+				enqueue(&head, &processes[process_index]);
+				printf("P%d arrives at Time %d \n", processes[process_index].process_id, time);
+				time = time + contSwitch;
+				printNew = 1;
+				process_index++;
+			}
 		}
 
 		//check if we should add process to queue
-		if(time == processes[process_index].arrivalTime && process_index < numProcesses)
-		{
-			//context switch
-			enqueue(&head, &processes[process_index]);
-			printf("P%d arrives at Time %d \n", processes[process_index].process_id, time);
-			time = time + contSwitch;
-			printNew = 1;
-			process_index++;
-		}
+
 
 	}
 	//print_queue(head);
