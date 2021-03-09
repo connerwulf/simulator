@@ -14,6 +14,7 @@ typedef struct Process
 	int eventtype;
 	int arrivalTime;
 	int burstTime;
+	int burstTimeCalc;
 	int timeFinished;
 } Process;
 
@@ -73,6 +74,7 @@ int main(int argc, char *argv[])
 						   , &processes[line].eventtype
 						   , &processes[line].arrivalTime
 					   		, &processes[line].burstTime);
+		processes[line].burstTimeCalc = processes[line].burstTime;
 		totalTime += processes[line].burstTime;
 
 	}
@@ -171,7 +173,7 @@ int main(int argc, char *argv[])
 		printf("Process %d %d %d %d\n",processes[g].process_id
 						   , processes[g].eventtype
 						   , processes[g].arrivalTime
-					   		, processes[g].burstTime);
+					   		, processes[g].burstTimeCalc);
 	}
 	//print_queue(head);
 	exit(0);
