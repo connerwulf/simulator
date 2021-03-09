@@ -171,9 +171,10 @@ int main(int argc, char *argv[])
 	}
 	for(int g = 0; g < numProcesses; g++)
 	{
-		printf("Process %d %d %d \n",processes[g].process_id
+		printf("Process %d %d %d %d\n",processes[g].process_id
 						   , processes[g].burstTimeCalc
-						   , processes[g].timeFinished);
+						   , processes[g].timeFinished
+						 	 , totalTime);
 	}
 	//print_queue(head);
 	exit(0);
