@@ -75,7 +75,7 @@ int main(int argc, char *argv[])
 						   , &processes[line].arrivalTime
 					   		, &processes[line].burstTime);
 		processes[line].burstTimeCalc = processes[line].burstTime;
-		totalTime += processes[line].burstTime;
+
 
 	}
 	//Quick Sort algorithm sort processes by the time they arrive.
@@ -176,7 +176,7 @@ int main(int argc, char *argv[])
 						   , processes[g].timeFinished
 						 	 , totalTime);
 	}
-	//print_queue(head);
+	totalTime = time;
 	exit(0);
 
 }
