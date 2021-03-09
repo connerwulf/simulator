@@ -84,7 +84,7 @@ int main(int argc, char *argv[])
 		{
 			enqueue(&head, &processes[process_index]);
 			printf("Time %d P%d arrives\n", time, processes[process_index].process_id);
-			printnew = 1;
+			printNew = 1;
 			process_index++;
 		}
 
