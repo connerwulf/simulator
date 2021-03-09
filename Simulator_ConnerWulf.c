@@ -122,9 +122,12 @@ int main(int argc, char *argv[])
 					printNew = 1;
 					process_index++;
 				}
-				//One CPU_Burst cycle and increment time
-			CPU_Burst(temp, &runningQuantum, quantum);
-			time++;
+				else
+				{
+					//One CPU_Burst cycle and increment time
+					CPU_Burst(temp, &runningQuantum, quantum);
+					time++;
+				}
 			//printf("%d %d %d %d\n", temp->process_id, temp->burstTime, quantum, runningQuantum);
 			}
 			//Checks if process finished after cpu cycle
