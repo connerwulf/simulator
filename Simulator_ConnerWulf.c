@@ -10,12 +10,12 @@ Author: Conner Wulf
 //Struct to hold all information required by process
 typedef struct Process
 {
-	double process_id;
-	double eventtype;
-	double arrivalTime;
-	double burstTime;
-	double burstTimeCalc;
-	double timeFinished;
+	int process_id;
+	int eventtype;
+	int arrivalTime;
+	int burstTime;
+	int burstTimeCalc;
+	int timeFinished;
 } Process;
 
 //Base node for custom Queue
@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
 	//Open file to read
 	FILE* file = fopen(fileName, "r");
 	char fileLine[16];
-	double numProcesses, totalTime = 0;
+	int numProcesses, totalTime = 0;
 	if(file == NULL)
 	{
 		printf("Error reading in file\n");
@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
 	}
 
 	//Array of struct Process to hold all data from input file
-	Process processes[(int)numProcesses];
+	Process processes[numProcesses];
 
 	//Rewind file to reread in order to extracted information
 	rewind(file);
@@ -180,7 +180,7 @@ int main(int argc, char *argv[])
 
 	//Calculations
 	totalTime = time;
-	double totalWait = 0.00; //Time finished - Time arrived - burstTime - contSwitch
+	int totalWait = 0; //Time finished - Time arrived - burstTime - contSwitch
 	for(int g = 0; g < numProcesses; g++)
 	{
 		totalWait = totalWait + (processes[g].timeFinished - processes[g].arrivalTime - processes[g].burstTimeCalc);
