@@ -180,7 +180,7 @@ int main(int argc, char *argv[])
 
 	//Calculations
 	totalTime = time;
-	double totalWait = 0; //Time finished - Time arrived - burstTime - contSwitch
+	double totalWait = 0.00; //Time finished - Time arrived - burstTime - contSwitch
 	for(int g = 0; g < numProcesses; g++)
 	{
 		totalWait = totalWait + (processes[g].timeFinished - processes[g].arrivalTime - processes[g].burstTimeCalc);
@@ -190,7 +190,8 @@ int main(int argc, char *argv[])
 						   , processes[g].timeFinished
 						 	 , totalTime);
 	}
-	printf("Average Wait: %d\n", totalWait/(double)numProcesses);
+	double averageWait = (double)totalWait / numProcesses
+	printf("Average Wait: %d\n", averageWait);
 	exit(0);
 
 }
