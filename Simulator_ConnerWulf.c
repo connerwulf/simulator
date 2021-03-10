@@ -98,40 +98,41 @@ int main(int argc, char *argv[])
 		//If a process exists in the readyQueue or If one is already loaded
 		if(head != NULL || temp != NULL)
 		{
-			//Keep track of time slice
-			if(runningQuantum == 0 )
-			{
-				//ContextSwitch
-				temp = dequeue(&head);
-			}
-			//printf("%d %d %d %d\n", temp->process_id, temp->burstTime, quantum, runningQuantum);
-			//Checks if timeSlice expired before cpu burst
-			if(runningQuantum < quantum)
-			{
-				//Conditional to check if new timeSlice started
-				// if(runningQuantum == 0 || printNew == 1)
-				// {
-				// 	//Could combine with above if, contextswitch and dequeue here
-				// 	printf("P%d Runs at Time %d \n", temp->process_id, time);
-				// 	printNew = 0;
-				// }
-				if(time == processes[process_index].arrivalTime && process_index < numProcesses)
+				//Keep track of time slice
+				if(runningQuantum == 0 )
 				{
-					//context switch
-					enqueue(&head, &processes[process_index]);
-					printf("P%d arrives at Time %d \n", processes[process_index].process_id, time);
-					time = time + contSwitch;
-					printNew = 1;
-					process_index++;
-					printf("P%d Runs at Time %d \n", temp->process_id, time);
+					//ContextSwitch
+					temp = dequeue(&head);
 				}
+				//printf("%d %d %d %d\n", temp->process_id, temp->burstTime, quantum, runningQuantum);
+				//Checks if timeSlice expired before cpu burst
+				if(runningQuantum < quantum)
+				{
+					//Conditional to check if new time Slice started
+					if(runningQuantum == 0 || printNew == 1)
+					{
+						printf("P%d Runs at Time %d \n", temp->process_id, time);
+						printNew = 0;
+					}
+
+					//Check for new process before running process --Context Switch
+					if(time == processes[process_index].arrivalTime && process_index < numProcesses)
+					{
+						enqueue(&head, &processes[process_index]);
+						printf("P%d arrives at Time %d \n", processes[process_index].process_id, time);
+						time = time + contSwitch;
+						printNew = 1;
+						process_index++;
+						printf("P%d Runs at Time %d \n", temp->process_id, time);
+					}
+
 					//One CPU_Burst cycle and increment time
 					CPU_Burst(temp, &runningQuantum, quantum);
 					time++;
-
-			//printf("%d %d %d %d\n", temp->process_id, temp->burstTime, quantum, runningQuantum);
 			}
-			//Checks if process finished after cpu cycle
+
+
+			//Checks if process finished after cpu burst
 			if(temp->burstTime == 0)
 			{
 				processesFinished++;
@@ -140,13 +141,14 @@ int main(int argc, char *argv[])
 				runningQuantum = 0;
 				temp = NULL;
 
-				//Context Switch
+				//Context Switch If items in ReadyQueue
 				if(head != NULL)
 				{
 					time = time + contSwitch;
 				}
 			}
-			//Checks if timeslice expired after cpu burst
+
+			//Checks if time slice expired after cpu burst
 			else if(runningQuantum == quantum)
 			{
 				//Context Switch
@@ -155,13 +157,14 @@ int main(int argc, char *argv[])
 					temp = NULL;
 					runningQuantum = 0;
 			}
-
 		}
+		//If nothing in temp or in queue then check for arrival and increment time
 		else
 		{
+			//Context Switch if there is an arrival
 			if(time == processes[process_index].arrivalTime && process_index < numProcesses)
 			{
-				//context switch
+
 				enqueue(&head, &processes[process_index]);
 				printf("P%d arrives at Time %d \n", processes[process_index].process_id, time);
 				time = time + contSwitch;
@@ -173,22 +176,21 @@ int main(int argc, char *argv[])
 				time++;
 			}
 		}
-
-		//check if we should add process to queue
-
-
 	}
-	totalTime = time;
 
+	//Calculations
+	totalTime = time;
+	int totalWait = 0 //Time finished - Time arrived -contSwitch
 	for(int g = 0; g < numProcesses; g++)
 	{
+		totalWait = totalWait + (processes[g].timeFinished - processes[g].arrivalTime - contSwitch);
 		printf("Process %d %d %d %d %d\n",processes[g].process_id
 						   , processes[g].arrivalTime
 						   , processes[g].burstTimeCalc
 						   , processes[g].timeFinished
 						 	 , totalTime);
 	}
-
+	printf("Total Wait: %d\n",totalWait);
 	exit(0);
 
 }
