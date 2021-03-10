@@ -182,9 +182,11 @@ int main(int argc, char *argv[])
 	totalTime = time + contSwitch;
 	int totalWait = 0; //Time finished - Time arrived - burstTime - contSwitch
 	int totalBurst = 0;
+	int turnaround = 0;
 	for(int g = 0; g < numProcesses; g++)
 	{
-		totalWait = totalWait + (processes[g].timeFinished - processes[g].arrivalTime - processes[g].burstTimeCalc);
+		totalWait = totalWait + (processes[g].timeFinished - processes[g].arrivalTime);
+		turnaround = turnaround + (processes[g].timeFinished - processes[g].arrivalTime);
 		totalBurst = totalBurst + processes[g].burstTimeCalc;
 
 		printf("Process %d %d %d %d %d\n",processes[g].process_id
@@ -194,9 +196,11 @@ int main(int argc, char *argv[])
 						 	 , totalTime);
 	}
 	double averageWait = (double)totalWait / numProcesses;
+	double avgTurnaround = (double)turnaround / numProcesses
 	double CPU_Utilization = (double)totalBurst / totalTime;
 	printf("\n\nCPU Utilization: %f%\n", CPU_Utilization * 100);
 	printf("Average Wait: %f\n", averageWait);
+	printf("Average Turn Around Time: %f\n", avgTurnaround);
 	exit(0);
 
 }
