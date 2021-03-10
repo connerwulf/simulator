@@ -32,7 +32,7 @@ void print_queue(Node *head);
 Process* dequeue(Node **head);
 void enqueue(Node **head, Process *process);
 void CPU_Burst(Process *process, int* runningQuantum, int quantum);
-
+void ContextSwitchArrivial(int* time, int contSwitch, Node **head, Process *process);
 
 /****************************************************************
 *                  Main Body                                    *
@@ -118,9 +118,10 @@ int main(int argc, char *argv[])
 				if(time == processes[process_index].arrivalTime && process_index < numProcesses)
 				{
 					//context switch
-					enqueue(&head, &processes[process_index]);
-					printf("P%d arrives at Time %d \n", processes[process_index].process_id, time);
-					time = time + contSwitch;
+					// enqueue(&head, &processes[process_index]);
+					// printf("P%d arrives at Time %d \n", processes[process_index].process_id, time);
+					// time = time + contSwitch;
+					ContextSwitchArrivial(&time, contSwitch, head, temp);
 					printNew = 1;
 					process_index++;
 					printf("P%d Runs at Time %d \n", temp->process_id, time);
@@ -139,6 +140,8 @@ int main(int argc, char *argv[])
 				temp->timeFinished = time;
 				runningQuantum = 0;
 				temp = NULL;
+
+				//Context Switch
 				if(head != NULL)
 				{
 					time = time + contSwitch;
@@ -147,6 +150,7 @@ int main(int argc, char *argv[])
 			//Checks if timeslice expired after cpu burst
 			else if(runningQuantum == quantum)
 			{
+				//Context Switch
 					enqueue(&head, temp);
 					time = time + contSwitch;
 					temp = NULL;
@@ -156,15 +160,19 @@ int main(int argc, char *argv[])
 		}
 		else
 		{
-			time++;
 			if(time == processes[process_index].arrivalTime && process_index < numProcesses)
 			{
 				//context switch
-				enqueue(&head, &processes[process_index]);
-				printf("P%d arrives at Time %d \n", processes[process_index].process_id, time);
-				time = time + contSwitch;
+				ContextSwitchArrivial(&time, contSwitch, head, processes[process_index]);
+				// enqueue(&head, &processes[process_index]);
+				// printf("P%d arrives at Time %d \n", processes[process_index].process_id, time);
+				// time = time + contSwitch;
 				printNew = 1;
 				process_index++;
+			}
+			else
+			{
+				time++;
 			}
 		}
 
@@ -176,7 +184,8 @@ int main(int argc, char *argv[])
 
 	for(int g = 0; g < numProcesses; g++)
 	{
-		printf("Process %d %d %d %d\n",processes[g].process_id
+		printf("Process %d %d %d %d %d\n",processes[g].process_id
+						   , processes[g].arrivalTime
 						   , processes[g].burstTimeCalc
 						   , processes[g].timeFinished
 						 	 , totalTime);
@@ -189,6 +198,18 @@ int main(int argc, char *argv[])
 /****************************************************************
 *                  Supporting Functions definitions                                    *
 ****************************************************************/
+void ContextSwitchArrivial(int* time, int contSwitch, Node **head, Process *process)
+{
+
+		//context switch
+		enqueue(&head, &processes[process_index]);
+		printf("P%d arrives at Time %d \n", processes[process_index].process_id, time);
+		time = time + contSwitch;
+		printNew = 1;
+		process_index++;
+
+
+}
 //Subtracts one from process burst time
 void CPU_Burst(Process *process, int* runningQuantum, int quantum)
 {
