@@ -183,7 +183,7 @@ int main(int argc, char *argv[])
 	int totalWait = 0; //Time finished - Time arrived - burstTime - contSwitch
 	for(int g = 0; g < numProcesses; g++)
 	{
-		totalWait = totalWait + (processes[g].timeFinished - processes[g].arrivalTime - - processes[g].burstTimeCalc - contSwitch);
+		totalWait = totalWait + (processes[g].timeFinished - processes[g].arrivalTime - processes[g].burstTimeCalc - contSwitch);
 		printf("Process %d %d %d %d %d\n",processes[g].process_id
 						   , processes[g].arrivalTime
 						   , processes[g].burstTimeCalc
