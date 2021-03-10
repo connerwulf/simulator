@@ -204,7 +204,7 @@ void ContextSwitchArrivial(int* time, int contSwitch, Node *head, Process *proce
 
 		//context switch
 		enqueue(&head, process);
-		printf("P%d arrives at Time %d \n", process->process_id, time);
+		printf("P%d arrives at Time %d \n", process->process_id, *time);
 		*time = *time + contSwitch;
 		*printNew = 1;
 		*process_index++;
