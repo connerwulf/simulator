@@ -195,7 +195,7 @@ int main(int argc, char *argv[])
 	}
 	double averageWait = (double)totalWait / numProcesses;
 	double CPU_Utilization = (double)totalBurst / totalTime;
-	printf("\n\CPU Utilization: %f%\n", CPU_Utilization);
+	printf("\n\nCPU Utilization: %f%\n", CPU_Utilization);
 	printf("Average Wait: %f\n", averageWait);
 	exit(0);
 
