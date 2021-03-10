@@ -164,7 +164,7 @@ int main(int argc, char *argv[])
 			if(time == processes[process_index].arrivalTime && process_index < numProcesses)
 			{
 				//context switch
-				ContextSwitchArrivial(&time, contSwitch, head, *processes[process_index], &printNew, &process_index);
+				ContextSwitchArrivial(&time, contSwitch, head, &processes[process_index], &printNew, &process_index);
 				// enqueue(&head, &processes[process_index]);
 				// printf("P%d arrives at Time %d \n", processes[process_index].process_id, time);
 				// time = time + contSwitch;
@@ -203,7 +203,7 @@ void ContextSwitchArrivial(int* time, int contSwitch, Node *head, Process *proce
 {
 
 		//context switch
-		enqueue(&head, &processes[process_index]);
+		enqueue(&head, &process);
 		printf("P%d arrives at Time %d \n", process->process_id, time);
 		*time = *time + contSwitch;
 		*printNew = 1;
