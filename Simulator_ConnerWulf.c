@@ -185,7 +185,7 @@ int main(int argc, char *argv[])
 	int turnaround = 0;
 	for(int g = 0; g < numProcesses; g++)
 	{
-		totalWait = totalWait + (processes[g].timeFinished - processes[g].arrivalTime);
+		totalWait = totalWait + (processes[g].timeFinished - processes[g].arrivalTime - processes[g].burstTimeCalc);
 		turnaround = turnaround + (processes[g].timeFinished - processes[g].arrivalTime);
 		totalBurst = totalBurst + processes[g].burstTimeCalc;
 
