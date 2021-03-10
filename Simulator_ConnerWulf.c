@@ -32,7 +32,8 @@ void print_queue(Node *head);
 Process* dequeue(Node **head);
 void enqueue(Node **head, Process *process);
 void CPU_Burst(Process *process, int* runningQuantum, int quantum);
-void ContextSwitchArrivial(int* time, int contSwitch, Node **head, Process *process);
+void ContextSwitchArrivial(int* time, int contSwitch, Node **head, Process *process, int* printNew, int* process_index);
+
 
 /****************************************************************
 *                  Main Body                                    *
@@ -121,9 +122,9 @@ int main(int argc, char *argv[])
 					// enqueue(&head, &processes[process_index]);
 					// printf("P%d arrives at Time %d \n", processes[process_index].process_id, time);
 					// time = time + contSwitch;
-					ContextSwitchArrivial(&time, contSwitch, head, temp);
-					printNew = 1;
-					process_index++;
+					ContextSwitchArrivial(&time, contSwitch, &head, temp, &printNew, &process_index);
+					//printNew = 1;
+					//process_index++;
 					printf("P%d Runs at Time %d \n", temp->process_id, time);
 				}
 					//One CPU_Burst cycle and increment time
@@ -163,12 +164,12 @@ int main(int argc, char *argv[])
 			if(time == processes[process_index].arrivalTime && process_index < numProcesses)
 			{
 				//context switch
-				ContextSwitchArrivial(&time, contSwitch, head, processes[process_index]);
+				ContextSwitchArrivial(&time, contSwitch, &head, processes[process_index], &printNew, &process_index);
 				// enqueue(&head, &processes[process_index]);
 				// printf("P%d arrives at Time %d \n", processes[process_index].process_id, time);
 				// time = time + contSwitch;
-				printNew = 1;
-				process_index++;
+				//printNew = 1;
+				//process_index++;
 			}
 			else
 			{
@@ -198,7 +199,7 @@ int main(int argc, char *argv[])
 /****************************************************************
 *                  Supporting Functions definitions                                    *
 ****************************************************************/
-void ContextSwitchArrivial(int* time, int contSwitch, Node **head, Process *process)
+void ContextSwitchArrivial(int* time, int contSwitch, Node **head, Process *process, int* printNew, int* process_index)
 {
 
 		//context switch
