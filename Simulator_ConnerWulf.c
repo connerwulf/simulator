@@ -180,10 +180,10 @@ int main(int argc, char *argv[])
 
 	//Calculations
 	totalTime = time;
-	int totalWait = 0; //Time finished - Time arrived -contSwitch
+	int totalWait = 0; //Time finished - Time arrived - burstTime - contSwitch
 	for(int g = 0; g < numProcesses; g++)
 	{
-		totalWait = totalWait + (processes[g].timeFinished - processes[g].arrivalTime - contSwitch);
+		totalWait = totalWait + (processes[g].timeFinished - processes[g].arrivalTime - - processes[g].burstTimeCalc - contSwitch);
 		printf("Process %d %d %d %d %d\n",processes[g].process_id
 						   , processes[g].arrivalTime
 						   , processes[g].burstTimeCalc
