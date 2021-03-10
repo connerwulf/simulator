@@ -32,7 +32,7 @@ void print_queue(Node *head);
 Process* dequeue(Node **head);
 void enqueue(Node **head, Process *process);
 void CPU_Burst(Process *process, int* runningQuantum, int quantum);
-void ContextSwitchArrivial(int* time, int contSwitch, Node **head, Process *process, int* printNew, int* process_index);
+void ContextSwitchArrivial(int* time, int contSwitch, Node *head, Process *process, int* printNew, int* process_index);
 
 
 /****************************************************************
@@ -122,7 +122,7 @@ int main(int argc, char *argv[])
 					// enqueue(&head, &processes[process_index]);
 					// printf("P%d arrives at Time %d \n", processes[process_index].process_id, time);
 					// time = time + contSwitch;
-					ContextSwitchArrivial(&time, contSwitch, &head, temp, &printNew, &process_index);
+					ContextSwitchArrivial(&time, contSwitch, head, temp, &printNew, &process_index);
 					//printNew = 1;
 					//process_index++;
 					printf("P%d Runs at Time %d \n", temp->process_id, time);
