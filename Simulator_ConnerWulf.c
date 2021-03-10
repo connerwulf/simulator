@@ -191,7 +191,7 @@ int main(int argc, char *argv[])
 						 	 , totalTime);
 	}
 	double averageWait = (double)totalWait / numProcesses;
-	printf("Average Wait: %d\n", averageWait);
+	printf("Average Wait: %f\n", averageWait);
 	exit(0);
 
 }
