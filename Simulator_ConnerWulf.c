@@ -82,7 +82,7 @@ int main(int argc, char *argv[])
 	sortByArrival(processes, 0, numProcesses - 1);
 
 
-/*** ROUND ROBIN ALOGRITHM STARTS***/
+/*** ROUND ROBIN ALOGRITHM STARTS*****************************************/
 	int time = 0;
 	int processesFinished = 0;
 	int process_index = 0;
@@ -108,13 +108,13 @@ int main(int argc, char *argv[])
 			//Checks if timeSlice expired before cpu burst
 			if(runningQuantum < quantum)
 			{
-				//Conditional to check if
-				if(runningQuantum == 0 || printNew == 1)
-				{
-					//Could combine with above if, contextswitch and dequeue here
-					printf("P%d Runs at Time %d \n", temp->process_id, time);
-					printNew = 0;
-				}
+				//Conditional to check if new timeSlice started
+				// if(runningQuantum == 0 || printNew == 1)
+				// {
+				// 	//Could combine with above if, contextswitch and dequeue here
+				// 	printf("P%d Runs at Time %d \n", temp->process_id, time);
+				// 	printNew = 0;
+				// }
 				if(time == processes[process_index].arrivalTime && process_index < numProcesses)
 				{
 					//context switch
