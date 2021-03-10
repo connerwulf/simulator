@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
 	}
 
 	//Array of struct Process to hold all data from input file
-	Process processes[numProcesses];
+	Process processes[(int)numProcesses];
 
 	//Rewind file to reread in order to extracted information
 	rewind(file);
