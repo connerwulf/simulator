@@ -189,15 +189,12 @@ int main(int argc, char *argv[])
 		turnaround = turnaround + (processes[g].timeFinished - processes[g].arrivalTime);
 		totalBurst = totalBurst + processes[g].burstTimeCalc;
 
-		printf("Process %d %d %d %d %d\n",processes[g].process_id
-						   , processes[g].arrivalTime
-						   , processes[g].burstTimeCalc
-						   , processes[g].timeFinished
-						 	 , totalTime);
 	}
+
 	double averageWait = (double)totalWait / numProcesses;
 	double avgTurnaround = (double)turnaround / numProcesses;
 	double CPU_Utilization = (double)totalBurst / totalTime;
+
 	printf("\n\nCPU Utilization: %f%\n", CPU_Utilization * 100);
 	printf("Average Wait: %f\n", averageWait);
 	printf("Average Turn Around Time: %f\n", avgTurnaround);
