@@ -199,7 +199,7 @@ int main(int argc, char *argv[])
 /****************************************************************
 *                  Supporting Functions definitions                                    *
 ****************************************************************/
-void ContextSwitchArrivial(int* time, int contSwitch, Node **head, Process *process, int* printNew, int* process_index)
+void ContextSwitchArrivial(int* time, int contSwitch, Node *head, Process *process, int* printNew, int* process_index)
 {
 
 		//context switch
